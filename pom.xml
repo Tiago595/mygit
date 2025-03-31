@@ -41,18 +41,29 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.example.asseco.AssecoApplication</mainClass>
+            </configuration>
+        </plugin>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.example.asseco.AssecoApplication</mainClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.4.2</version>
+            <executions>
+                <execution>
+                    <id>default-jar</id>
+                    <phase>none</phase>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 	<distributionManagement>
 		<repository>
 			<id>github</id>
