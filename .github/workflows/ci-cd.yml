@@ -40,9 +40,6 @@ jobs:
       - name: Construir e Testar
         run: mvn clean package
 
-      - name: Empacotar com Spring Boot
-        run: mvn spring-boot:repackage
-
       - name: Publicar no GitHub Packages
         run: mvn deploy
         env:
