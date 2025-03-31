@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read    # For checking out code
+  packages: write   # For GitHub Packages
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,15 +26,17 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Construir o projeto com Maven
-        run: mvn clean package
+        run: mvn clean package -B
 
-      - name: Publicar artefato no GitHub Packages (ou Maven Central)
-        run: mvn deploy
+      - name: Publicar artefato no GitHub Packages
+        run: mvn deploy -B
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}  # Para Maven Central, caso necessário
 
   docker:
     needs: build
@@ -51,6 +57,6 @@ jobs:
 
       - name: Construir e enviar imagem Docker
         run: |
-          docker build -t meuapp:latest .
-          docker tag meuapp:latest docker.io/meuusuario/meuapp:latest
-          docker push docker.io/meuusuario/meuapp:latest
+          docker build -t asseco:latest .
+          docker tag asseco:latest docker.io/${{ secrets.DOCKER_USERNAME }}/asseco:latest
+          docker push docker.io/${{ secrets.DOCKER_USERNAME }}/asseco:latest
