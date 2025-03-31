@@ -24,7 +24,7 @@ jobs:
           server-id: github
           settings-path: ${{ github.workspace }}
 
-      - name: Criar settings.xml
+      - name: Criar settings.xml para Maven
         run: |
           mkdir -p ~/.m2
           echo '<settings>
@@ -38,19 +38,9 @@ jobs:
           </settings>' > ~/.m2/settings.xml
 
       - name: Construir e Testar
-        run: mvn clean package -DskipTests
-
-      - name: Verificar se o artefato foi gerado
-        run: ls -l target/
+        run: mvn clean package
 
       - name: Publicar no GitHub Packages
         run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-      - name: Publicar no GitHub Packages
-        run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
