@@ -40,8 +40,14 @@ jobs:
       - name: Construir e Testar
         run: mvn clean package -DskipTests
 
-      - name: Verificar artefatos gerados
-        run: ls -R target
+      - name: Verificar se o artefato foi gerado
+        run: ls -l target/
+
+      - name: Publicar no GitHub Packages
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
       - name: Publicar no GitHub Packages
         run: mvn deploy
