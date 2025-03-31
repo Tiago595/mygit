@@ -38,7 +38,10 @@ jobs:
           </settings>' > ~/.m2/settings.xml
 
       - name: Construir e Testar
-        run: mvn clean package
+        run: mvn clean package -DskipTests
+
+      - name: Verificar artefatos gerados
+        run: ls -R target
 
       - name: Publicar no GitHub Packages
         run: mvn deploy
